@@ -1,0 +1,11 @@
+.brand-logo img {
+    max-width: 185px;
+}
+
+img.w-100 {
+    border-radius: 12px;
+}
+
+.footer-section {
+    padding-top: 3em;
+}
