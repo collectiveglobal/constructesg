@@ -121,6 +121,20 @@ img.w-100 {
     text-wrap: pretty;
 }
 
+.blogs-post img {
+    height: auto;
+}
+
+.blog-area--l9 .blog-area__more {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.blog-area--l9 .blog-area__more .btn {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 .blog-listing__excerpt {
     margin-top: -6px;
     margin-bottom: 35px;
@@ -134,5 +148,233 @@ img.w-100 {
 .next-prev-btn a:focus-visible,
 .widget__recent-post a:focus-visible {
     outline: 2px solid #ff5722;
+    outline-offset: 3px;
+}
+
+
+/* Navigation: current section */
+.site-menu-main .nav-link-item.is-active {
+    color: #649b82;
+}
+
+@media (min-width: 992px) {
+    .site-menu-main .nav-link-item.is-active {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 8px;
+    }
+}
+
+
+/* About page */
+.about-page-intro {
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+@media (min-width: 992px) {
+    .about-page-intro {
+        padding-top: 90px;
+        padding-bottom: 100px;
+    }
+}
+
+.about-page-intro .section-title__heading {
+    text-wrap: balance;
+}
+
+.about-page-intro .section-title__description {
+    max-width: 62ch;
+    margin-top: 18px;
+    text-wrap: pretty;
+}
+
+.about-page-intro__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+    margin-top: 40px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.about-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+@media (min-width: 992px) {
+    .about-section {
+        padding-top: 110px;
+        padding-bottom: 115px;
+    }
+}
+
+.about-section .section-title__heading {
+    text-wrap: balance;
+}
+
+.about-copy {
+    margin-top: 25px;
+}
+
+.about-copy p {
+    max-width: 62ch;
+    margin-bottom: 20px;
+    font-size: 17px;
+    line-height: 30px;
+    text-wrap: pretty;
+}
+
+.about-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 50px;
+    margin: 35px 0 0;
+    padding-top: 30px;
+    border-top: 1px solid rgba(33, 55, 100, 0.12);
+}
+
+.about-stats dt {
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: #213764;
+    font-variant-numeric: tabular-nums;
+}
+
+.about-stats dd {
+    margin: 8px 0 0;
+    font-size: 15px;
+    color: var(--color-texts-3);
+}
+
+.about-canada {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #213764;
+}
+
+.about-canada__img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.about-canada__caption {
+    padding: 28px 30px 30px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.about-canada__caption p {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.about-canada__title {
+    margin-bottom: 10px;
+    font-size: 21px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.about-audience {
+    height: 100%;
+    padding: 30px 0 20px;
+    border-top: 2px solid #649b82;
+}
+
+.about-audience__title {
+    margin-bottom: 12px;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #213764;
+    text-wrap: balance;
+}
+
+.about-audience__text {
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 27px;
+}
+
+@media (min-width: 992px) {
+    .about-capabilities__intro {
+        position: sticky;
+        top: 30px;
+    }
+}
+
+.about-capabilities {
+    margin: 0;
+}
+
+.about-capability {
+    display: flex;
+    gap: 22px;
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(33, 55, 100, 0.1);
+}
+
+.about-capability:first-child {
+    padding-top: 0;
+}
+
+.about-capability__icon {
+    display: inline-flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background-color: rgba(100, 155, 130, 0.14);
+    color: #649b82;
+    font-size: 18px;
+}
+
+.about-capability__title {
+    margin-bottom: 6px;
+    font-size: 19px;
+    font-weight: 500;
+    color: #213764;
+}
+
+.about-capability__text {
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.about-capability__link {
+    color: #213764;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: underline;
+    text-decoration-color: #649b82;
+    text-underline-offset: 3px;
+}
+
+.about-capability__link:hover {
+    color: #649b82;
+}
+
+.about-cta {
+    background-color: #213764;
+}
+
+.about-cta::before {
+    display: none;
+}
+
+.about-capability__link:focus-visible,
+.site-menu-main .nav-link-item:focus-visible {
+    outline: 2px solid #649b82;
     outline-offset: 3px;
 }

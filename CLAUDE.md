@@ -13,13 +13,17 @@ Marketing site for ConstructESG, served at https://constructionesg.ca (see `CNAM
 
 ## Which pages are real
 
-- `index.html` is a single-page landing site. Its nav and footer are in-page anchors: `#about`, `#uses`, `#benefits`, `#blog`, `#contact`.
-- The blog: `blogs.html` is the "Learn" listing page, and the three article pages are `blockchain-in-construction.html`, `traceability-in-construction.html` and `carbon-footprint-in-construction.html`. `blog-details.html` is only a meta-refresh redirect to `blogs.html`, kept because it was the old public URL for the blog cards.
+- `index.html` is the landing page. It has sections `#about`, `#benefits`, `#uses`, `#blog` (three featured articles) and `#contact`.
+- `about.html` is the About page. Its copy is deliberately limited to claims the homepage already makes: the 10+ years in construction administration, the mission, the three audiences, the seven capabilities and the three-step onboarding process.
+- The blog: `blogs.html` is the "Learn" listing page, and there are eight root-level article pages. `README.md` has the table of articles and their reading order. `blog-details.html` is only a meta-refresh redirect to `blogs.html`, kept because it was the old public URL for the blog cards.
 - `404.html`, `pricing.html`, `faq.html`, `contact-1.html`, `sign-up.html`, `terms-page.html` and `coming-soon.html` are **unmodified template pages**. They still have "Fastland" titles, lorem-style copy and navs linking to about 40 template pages that don't exist. Nothing on the real site links to them. Don't copy markup or nav from them. Use `index.html` or an article page as the source.
 
 ## Architecture notes
 
-- **No includes.** Each page carries its own full copy of the `<head>`, header and footer. A change to the nav, footer, stylesheets or scripts has to be made in every real page by hand. The subpages link back with `/index.html#section`, while `index.html` uses bare `#section` anchors.
+- **No includes.** Each page carries its own full copy of the `<head>`, header and footer. A change to the nav, footer, stylesheets or scripts has to be made in every real page by hand. Nav rules:
+  - **About** and **Blog** link to `/about.html` and `/blogs.html` from every page.
+  - **Use Cases**, **Benefits** and **Contact** are bare `#section` anchors on `index.html` and `/index.html#section` everywhere else.
+  - The matching nav item gets the class `is-active` on the About page, the Blog page and every article, plus `aria-current="page"` on the page it links to.
 - **GA4.** The Google tag (`G-QSHL075L8Y`) is the first thing in every page's `<head>`. Keep it on any new page.
 - **CSS.** `css/main.css` (about 16k lines) and `css/bootstrap.css` are template output; `css/maps/` points to SCSS sources that aren't in this repo. Put all site changes in `css/custom-styles.css`, which loads last. It holds the blog article styles (`.blog-details--article`, `.article-body`, `.article-aside`, `.blog-listing__excerpt`), layered on top of the template's `.blog-details` and `.blogs-post` classes.
 - **JS load order matters.** `js/custom.js` initializes every plugin (nice-select, counterUp, fancybox, slick, AOS, isotope, skill bars) inside one `$(document).ready`.
@@ -32,10 +36,12 @@ Marketing site for ConstructESG, served at https://constructionesg.ca (see `CNAM
 
 ## Blog conventions
 
-- Articles are **evergreen**: no publish dates, no author bylines, no time-bound claims such as "next year" or specific deadlines. Show a read time (about 200 words per minute) instead of a date. Use Canadian spelling (labour, aluminium).
-- To add an article:
-  1. Copy an existing article page.
-  2. Update `<title>`, the meta description, `canonical`, and the `og:*` tags. Their URLs use `https://constructionesg.ca/`.
-  3. Add a card to `blogs.html` and to the `#blog` section of `index.html`.
-  4. Add a link to it in the "More to read" sidebar of the other articles.
-- The article images in `image/jpg/constructesg-*.jpg` are small (324×464 portrait), so they sit in the sidebar at close to native size rather than as full-width heroes.
+- Articles are **evergreen**: no publish dates, no author bylines, no time-bound claims such as "next year" or specific deadlines. Each shows a category (Getting started / Environmental / Social / Governance / Technology) and a read time (words ÷ 200, rounded up) instead of a date. Use Canadian spelling (labour, aluminium, program).
+- Keep claims about ConstructESG within what `index.html` says the product does.
+- Articles link to each other in three places, all maintained by hand:
+  - a "More to read" sidebar listing three related articles;
+  - a "Next article" link that follows the reading order in `README.md`;
+  - links in the body text.
+  Adding an article means updating neighbouring pages too. Follow the "Adding an article" checklist in `README.md`.
+- Cover images are small portrait JPEGs with a width-to-height ratio of about 0.7 (`image/jpg/constructesg-<slug>.jpg`). They sit in the sidebar near native size rather than as full-width heroes.
+- `<img>` tags in blog cards carry `width`/`height` attributes. `.blogs-post img { height: auto; }` in `custom-styles.css` is what stops them rendering squashed, so keep that rule.
