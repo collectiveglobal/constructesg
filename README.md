@@ -10,7 +10,7 @@ The site is plain static HTML, CSS and jQuery. There is no build step, package m
 - [Pages](#pages)
 - [How the pages are put together](#how-the-pages-are-put-together)
 - [The blog](#the-blog)
-- [Known issues and cleanup backlog](#known-issues-and-cleanup-backlog)
+- [Housekeeping](#housekeeping)
 
 ## Quick start
 
@@ -30,8 +30,9 @@ The site is hosted on **GitHub Pages** from the `main` branch, repository root.
 
 - **Every push to `main` is a production deploy.** Pages rebuilds in about a minute.
 - The custom domain comes from the `CNAME` file (`constructionesg.ca`). Don't delete or rename it.
-- `404.html` is served for any URL that doesn't exist.
-- Pages runs the files through Jekyll (there is no `.nojekyll` file), so Markdown files such as this README are also published on the site (for example `/README.md`).
+- `404.html` is served for any URL that doesn't exist, at that URL. Because it can appear at nested paths such as `/old/page`, **all of its asset paths are root-relative** (`/css/…`, `/image/…`). Keep them that way.
+- HTTPS is enforced in the Pages settings, so `http://` requests redirect to `https://`.
+- Pages runs the files through Jekyll (there is no `.nojekyll` file). `_config.yml` exists only to keep `README.md` and `CLAUDE.md` off the live site. Add any other repo-only files to its `exclude` list.
 
 To check the latest build:
 
@@ -48,7 +49,7 @@ gh api repos/collectiveglobal/constructesg/pages/builds/latest --jq '.status, .c
 ├── blogs.html                  Blog page listing every article
 ├── *-in-construction.html      Blog articles (plus a few with other slugs; see "The blog")
 ├── blog-details.html           Redirect to blogs.html (old blog URL)
-├── 404.html, pricing.html, …   Unmodified template pages (see "Pages")
+├── 404.html                    "Page not found" page (root-relative asset paths)
 ├── css/
 │   ├── bootstrap.css           Bootstrap 5 (template build)
 │   ├── main.css                Template theme styles, ~16k lines; treat as vendor code
@@ -62,9 +63,10 @@ gh api repos/collectiveglobal/constructesg/pages/builds/latest --jq '.status, .c
 ├── image/
 │   ├── png/                    Logos and favicon (ConstructESG-*.png)
 │   ├── jpg/constructesg-*.jpg  Blog cover images
-│   ├── jpg/, home-3/           Homepage photography (constructesg-*, gov, co2-est, …)
-│   └── home-1 … home-8/        Template stock images, used only by template pages
+│   ├── jpg/, home-3/           Homepage and About photography
+│   └── home-2, 4, 5, 8/        Decorative shapes used by the homepage and main.css
 ├── CNAME                       Custom domain for GitHub Pages
+├── _config.yml                 Keeps README.md and CLAUDE.md off the live site
 └── CLAUDE.md                   Notes for AI coding assistants
 ```
 
@@ -77,11 +79,11 @@ gh api repos/collectiveglobal/constructesg/pages/builds/latest --jq '.status, .c
 | `blogs.html` | Blog page listing all articles | Live, maintained |
 | Article pages | Eight evergreen articles (see [The blog](#the-blog)) | Live, maintained |
 | `blog-details.html` | Meta-refresh redirect to `blogs.html`, kept because it was the blog's old public URL | Redirect only |
-| `404.html`, `pricing.html`, `faq.html`, `contact-1.html`, `sign-up.html`, `terms-page.html`, `coming-soon.html` | Pages from the original template | **Not yet adapted.** They still say "Fastland", contain placeholder copy and link to template pages that don't exist. Nothing on the real site links to them, except that `404.html` is shown for broken URLs. |
+| `404.html` | "Page not found" page with links to Home, About, Blog and Contact | Live, maintained |
 
 ## How the pages are put together
 
-The site began as the **Fastland** landing-page template (Bootstrap 5 + jQuery). The homepage and the blog have been rebuilt with ConstructESG content; the template's styling and plugins remain underneath.
+The site began as the **Fastland** landing-page template (Bootstrap 5 + jQuery). Every page has been rebuilt with ConstructESG content, and the template's own pages, stock images and unused scripts have been removed. The template's stylesheets and the plugins the pages use remain underneath.
 
 ### Shared header, footer and `<head>`
 
@@ -100,6 +102,7 @@ Stylesheets load in this order: `bootstrap.css`, the icon and typography fonts, 
 - `custom-styles.css` also holds the page-specific styles:
   - **Blog:** `.blog-details--article`, `.article-body`, `.article-aside`, `.blog-listing__excerpt` and `.blog-area__more`. They build on the template's `.blog-details`, `.blogs-post` and `.sidebar-area` classes.
   - **About page:** everything prefixed `.about-`.
+  - **404 page:** everything prefixed `.not-found`.
   - **Nav:** `.nav-link-item.is-active`.
 - Brand colours: green `#649b82` (the template calls it `electric-violet-2`) and navy `#213764` for headings.
 
@@ -112,7 +115,7 @@ Stylesheets load in this order: `bootstrap.css`, the icon and typography fonts, 
 
 `custom.js` also uses `$(window).load(...)`, which was removed in jQuery 3. It works only because `jquery-migrate` loads alongside jQuery 3.3.1, so don't remove `jquery-migrate`.
 
-The template's light/dark theme switcher is disabled (its script is commented out), and pages are fixed to `data-theme="light"`.
+The template's light/dark theme switcher has been removed, and pages are fixed to `data-theme="light"`.
 
 ### Analytics
 
@@ -120,7 +123,13 @@ Every page starts its `<head>` with the Google Analytics 4 tag, ID **`G-QSHL075L
 
 ### Contact form
 
-The homepage contact form is an embedded **Google Form** (iframe in `#contact`), so submissions arrive in Google Forms. `plugins/php/mailer.php` and `plugins/php/ajax_contact.js` are template leftovers: they aren't used, they don't work, and GitHub Pages can't run PHP anyway.
+The homepage contact form is an embedded **Google Form** (iframe in `#contact`), so submissions arrive in Google Forms. It is the site's only contact route.
+
+The contact block next to it lists only the Toronto HQ. It used to show two email addresses and a phone number, but they were removed:
+- The emails were `team@` and `help@constructesg.com`, and that domain doesn't exist in DNS, so the addresses couldn't receive mail.
+- The phone number was a template placeholder.
+
+If real contact details become available, add them back as extra `widget--contact` items in `index.html#contact`.
 
 ## The blog
 
@@ -168,21 +177,9 @@ The table follows the reading order used on `blogs.html`. Each article's "Next a
 8. Add the new article to the "More to read" lists of one or two related articles.
 9. Preview locally at desktop and mobile widths before pushing.
 
-## Known issues and cleanup backlog
+## Housekeeping
 
-**Template leftovers**
-- The template pages listed under [Pages](#pages) are still published. `404.html` matters most, because every broken URL shows it.
-- `plugins/php/` holds an unused mail script with another company's email addresses.
-- `image/home-1` … `home-8`, `image/png/blog-post-*`, `image/png/portfolio-*` and the `image/jpg/portfolio-*` files are template stock images, used only by template pages.
-
-**Homepage content**
-- The copy is dated in places: "mandatory ESG reporting … is coming to Canada in 2024" and "reporting requirements you might face next year".
-- The phone number in the contact block is a placeholder: `+8 (123) 985 789`.
-- The contact block icons are mismatched: an envelope on the address, a phone on the email line, and a map pin on the phone number.
-- Several calls to action link to `#` and go nowhere: "Get A Free Audit", "Start Free Trial", the "Ready? Start with a Free Audit" card and the service cards.
-- Most homepage images have empty `alt` text.
-
-**Hosting and repository**
-- HTTPS isn't enforced in the GitHub Pages settings, so the site still answers on `http://`. Enable "Enforce HTTPS" under Settings → Pages.
-- Three `.DS_Store` files are tracked in git.
-- `README.md` and `CLAUDE.md` are published on the live domain. To stop that, add a `_config.yml` containing `exclude: [README.md, CLAUDE.md]`.
+- **Only ship files that are used.** `image/` and `plugins/` contain only files referenced by a page or by a stylesheet the pages load. When you replace or remove an image, delete the old file too.
+- **No placeholders.** Don't publish placeholder copy, contact details or links to `#`. If something isn't ready, leave it out.
+- `.DS_Store` files are ignored via `.gitignore`.
+- `css/main.css` is still the full template stylesheet, so most of its rules are unused. It's safe to leave as it is, but it could be trimmed with a CSS purge tool if page weight ever matters.

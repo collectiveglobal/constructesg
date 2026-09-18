@@ -9,14 +9,15 @@ Marketing site for ConstructESG, served at https://constructionesg.ca (see `CNAM
 ## Commands
 
 - **Preview locally:** `python3 -m http.server 8000` from the repo root, then open http://localhost:8000/index.html. Don't open files via `file://`, because internal links are root-relative (`/index.html`, `/blogs.html`) and break there.
-- **Deploy:** GitHub Pages (legacy build) publishes the `main` branch root. **Every push to `main` goes live immediately.** `404.html` is served as the custom 404 page.
+- **Deploy:** GitHub Pages (legacy build) publishes the `main` branch root. **Every push to `main` goes live immediately.** HTTPS is enforced. `_config.yml` only excludes `README.md` and `CLAUDE.md` from the Jekyll build, so they aren't published.
 
 ## Which pages are real
 
 - `index.html` is the landing page. It has sections `#about`, `#benefits`, `#uses`, `#blog` (three featured articles) and `#contact`.
 - `about.html` is the About page. Its copy is deliberately limited to claims the homepage already makes: the 10+ years in construction administration, the mission, the three audiences, the seven capabilities and the three-step onboarding process.
-- The blog: `blogs.html` is the "Learn" listing page, and there are eight root-level article pages. `README.md` has the table of articles and their reading order. `blog-details.html` is only a meta-refresh redirect to `blogs.html`, kept because it was the old public URL for the blog cards.
-- `404.html`, `pricing.html`, `faq.html`, `contact-1.html`, `sign-up.html`, `terms-page.html` and `coming-soon.html` are **unmodified template pages**. They still have "Fastland" titles, lorem-style copy and navs linking to about 40 template pages that don't exist. Nothing on the real site links to them. Don't copy markup or nav from them. Use `index.html` or an article page as the source.
+- The blog: `blogs.html` is the Blog listing page, and there are eight root-level article pages. `README.md` has the table of articles and their reading order. `blog-details.html` is only a meta-refresh redirect to `blogs.html`, kept because it was the old public URL for the blog cards.
+- `404.html` is served at any missing URL, including nested paths, so **every asset path in it must be root-relative** (`/css/…`, `/image/…`, `/js/…`), unlike the other pages, which use `./`.
+- The original Fastland template pages, stock images, demo files and unused plugins have been deleted. Nothing left in the repo is template-only.
 
 ## Architecture notes
 
@@ -25,14 +26,15 @@ Marketing site for ConstructESG, served at https://constructionesg.ca (see `CNAM
   - **Use Cases**, **Benefits** and **Contact** are bare `#section` anchors on `index.html` and `/index.html#section` everywhere else.
   - The matching nav item gets the class `is-active` on the About page, the Blog page and every article, plus `aria-current="page"` on the page it links to.
 - **GA4.** The Google tag (`G-QSHL075L8Y`) is the first thing in every page's `<head>`. Keep it on any new page.
-- **CSS.** `css/main.css` (about 16k lines) and `css/bootstrap.css` are template output; `css/maps/` points to SCSS sources that aren't in this repo. Put all site changes in `css/custom-styles.css`, which loads last. It holds the blog article styles (`.blog-details--article`, `.article-body`, `.article-aside`, `.blog-listing__excerpt`), layered on top of the template's `.blog-details` and `.blogs-post` classes.
+- **CSS.** `css/main.css` (about 16k lines) and `css/bootstrap.css` are template output; `css/maps/` points to SCSS sources that aren't in this repo. Put all site changes in `css/custom-styles.css`, which loads last. It holds the page-specific styles: the blog (`.blog-details--article`, `.article-body`, `.article-aside`, `.blog-listing__excerpt`), the About page (`.about-*`), the 404 page (`.not-found*`) and the nav (`.is-active`). Brand colours are green `#649b82` and navy `#213764`.
 - **JS load order matters.** `js/custom.js` initializes every plugin (nice-select, counterUp, fancybox, slick, AOS, isotope, skill bars) inside one `$(document).ready`.
   - If a page leaves out one of the plugin scripts, that call throws and the rest of the block never runs, including `AOS.init()`. Elements with `data-aos` then stay invisible.
   - The `#loading` preloader is removed only by `custom.js` on window load, so a JS error leaves it covering the page.
   - Every page should load the same script list, in the same order, as `index.html`.
   - `custom.js` uses `$(window).load(...)`, which only works because `jquery-migrate` is loaded alongside jQuery 3.3.1. Don't remove migrate.
-- **Contact form.** The live contact form is a Google Forms iframe embedded in `index.html#contact`. `plugins/php/mailer.php` and `plugins/php/ajax_contact.js` are broken template leftovers: they aren't referenced anywhere, `mailer.php` contains another company's email addresses, and GitHub Pages can't run PHP anyway.
-- The theme-mode switcher script is commented out. Pages are fixed to `data-theme="light"`.
+- **Contact.** The only contact route is the Google Forms iframe in `index.html#contact`. The contact block lists just the Toronto HQ. Email addresses and a phone number were removed on purpose: `constructesg.com` has no DNS, and the phone number was a template placeholder. Don't add contact details unless the user supplies real ones.
+- The theme-mode switcher has been removed. Pages are fixed to `data-theme="light"`.
+- **No placeholders, no dead files.** Don't publish placeholder copy or `href="#"` links, and keep `image/` and `plugins/` limited to files that are actually referenced.
 
 ## Blog conventions
 

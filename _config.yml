@@ -1,0 +1,5 @@
+# GitHub Pages builds this repository with Jekyll. The site itself is plain
+# static HTML; this file only keeps repository docs off the live domain.
+exclude:
+  - README.md
+  - CLAUDE.md

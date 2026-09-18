@@ -378,3 +378,93 @@ img.w-100 {
     outline: 2px solid #649b82;
     outline-offset: 3px;
 }
+
+
+/* Homepage: "Ready?" service card icon */
+.card--service-more .card--service__icon {
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+
+/* 404 page */
+.not-found {
+    padding-top: 80px;
+    padding-bottom: 90px;
+}
+
+@media (min-width: 992px) {
+    .not-found {
+        padding-top: 130px;
+        padding-bottom: 140px;
+    }
+}
+
+.not-found__code {
+    margin-bottom: 10px;
+    font-size: 96px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: #649b82;
+    font-variant-numeric: tabular-nums;
+}
+
+.not-found__title {
+    margin-bottom: 18px;
+    font-size: 34px;
+    font-weight: 500;
+    color: #213764;
+    text-wrap: balance;
+}
+
+@media (min-width: 992px) {
+    .not-found__title {
+        font-size: 44px;
+    }
+}
+
+.not-found__text {
+    max-width: 52ch;
+    margin: 0 auto 35px;
+    font-size: 18px;
+    line-height: 30px;
+    text-wrap: pretty;
+}
+
+.not-found__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.not-found__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: 50px;
+    background-color: #fff;
+    color: #213764;
+    font-weight: 500;
+    box-shadow: 0 4px 24px rgba(33, 55, 100, 0.08);
+    transition: color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.not-found__links a i {
+    font-size: 13px;
+    color: #649b82;
+}
+
+.not-found__links a:hover,
+.not-found__links a:focus-visible {
+    color: #649b82;
+    box-shadow: 0 6px 30px rgba(33, 55, 100, 0.14);
+    transform: translateY(-2px);
+}
+
+.not-found__links a:focus-visible {
+    outline: 2px solid #649b82;
+    outline-offset: 3px;
+}
