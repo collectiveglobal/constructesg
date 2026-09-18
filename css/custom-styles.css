@@ -9,3 +9,130 @@ img.w-100 {
 .footer-section {
     padding-top: 3em;
 }
+
+/* Blog: articles and resources listing */
+.blog-details--article {
+    padding-top: 40px;
+}
+
+@media (min-width: 992px) {
+    .blog-details--article {
+        padding-top: 70px;
+    }
+}
+
+.article-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    font-size: 15px;
+    color: var(--color-texts-3);
+    transition: color 0.3s;
+}
+
+.article-back:hover,
+.article-back:focus-visible {
+    color: #ff5722;
+}
+
+.blog-details--article .blog-title__heading {
+    text-wrap: balance;
+}
+
+.article-body .blog-content__text,
+.article-body .blog-content__list,
+.article-body .qoute__content {
+    max-width: 68ch;
+    text-wrap: pretty;
+}
+
+.article-body h2.blog-content__heading {
+    font-size: 24px;
+    line-height: 1.35;
+    margin-top: 45px;
+    text-wrap: balance;
+}
+
+.article-body .blog-content__list {
+    margin-bottom: 30px;
+}
+
+.article-body strong {
+    font-weight: 600;
+    color: var(--color-headings);
+}
+
+.article-body a:not(.btn) {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: #ff5722;
+    text-underline-offset: 3px;
+}
+
+.article-body a:not(.btn):hover {
+    color: #ff5722;
+}
+
+.article-body .qoute {
+    margin: 10px 0 5px;
+}
+
+.article-body .article-summary {
+    margin-top: 45px;
+    padding: 30px 30px 20px;
+    border-left: 3px solid #ff5722;
+    border-radius: 0 10px 10px 0;
+    background-color: #fff;
+}
+
+.article-body .article-summary .blog-content__heading {
+    margin-top: 0;
+}
+
+.article-body .article-summary .blog-content__list li {
+    font-size: 17px;
+}
+
+.article-aside__img {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    margin-bottom: 25px;
+    border-radius: 12px;
+}
+
+@media (min-width: 992px) {
+    .article-aside {
+        position: sticky;
+        top: 30px;
+    }
+}
+
+.article-cta__text {
+    margin-bottom: 22px;
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.blog-area--listing .section-title__description {
+    margin-top: 15px;
+    text-wrap: pretty;
+}
+
+.blog-listing__excerpt {
+    margin-top: -6px;
+    margin-bottom: 35px;
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--color-texts-3);
+}
+
+.blogs-post a:focus-visible,
+.article-back:focus-visible,
+.next-prev-btn a:focus-visible,
+.widget__recent-post a:focus-visible {
+    outline: 2px solid #ff5722;
+    outline-offset: 3px;
+}
